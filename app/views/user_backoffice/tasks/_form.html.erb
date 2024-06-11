@@ -1,0 +1,40 @@
+<%= form_with(model: user_backoffice_task, class: "contents") do |form| %>
+  <% if user_backoffice_task.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(user_backoffice_task.errors.count, "error") %> prohibited this user_backoffice_task from being saved:</h2>
+
+      <ul>
+        <% user_backoffice_task.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-2">
+    <%= form.label :title, "Título" ,class:"block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
+    <%= form.text_field :title, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5" %>
+  </div>
+
+  <div class="my-2">
+    <%= form.label :description, "Descrição" , class:"block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.text_area :description, rows: 4, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5" %>
+  </div>
+  <div class="my-2">
+    <%= form.label :priority , "Prioridade", class:"block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
+    <%= form.select :priority, options_for_select([['Alta', 'Alta'], ['Média', 'Média'], ['Baixa', 'Baixa']]),{}, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5" %>
+  </div>
+
+  <div class="flex my-8">
+    <%= form.check_box :shared,  class: "w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" %>
+    <%= form.label :shared, "Compartilhar tarefa", class:"ml-2 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"%>
+  </div>
+ 
+  <%= hidden_field_tag :status, 'Não concluída' %>
+  <%= hidden_field_tag :user_id, current_user.id %>
+
+  <div class="inline">
+    <%= form.submit "Confirmar" ,class: "bg-purple-600 rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>
+

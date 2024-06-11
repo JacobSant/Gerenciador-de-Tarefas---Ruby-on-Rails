@@ -1,0 +1,33 @@
+<div id="<%= dom_id task %>">
+  <div class="w-full justify-center text-white rounded-lg p-2 flex px-4 bg-purple-600">
+    <%= task.title %>
+  </div>
+
+  <div class="my-5">
+    <strong class="block text-sm font-medium text-gray-900 my-1">Descrição da tarefa</strong>
+    <p class = "shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"><%= task.description %></p>
+  </div>
+
+  <div class="my-5">
+    <strong class="block text-sm font-medium text-gray-900 my-1">Andamento</strong>
+    <p class = "shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"><%= task.status %></p>
+  </div>
+
+  <div class="my-5">
+    <strong class="block text-sm font-medium text-gray-900 my-1">Prioridade</strong>
+    <p class = "shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"><%= task.priority %></p>
+  </div>
+  
+  <div class="my-5">
+    <strong class="block text-sm font-medium text-gray-900 my-1">Compartilhamento</strong>
+    <p class = "shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"><%= case task.shared
+      when 1
+        'Tarefa compartilhada'
+      
+      else
+        'Tarefa não compartilhada'
+      end %>
+    </p>
+  </div>
+
+</div>

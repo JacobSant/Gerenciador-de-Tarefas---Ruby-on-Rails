@@ -1,0 +1,47 @@
+
+
+<nav class="border-gray-200 dark:bg-gray-900" style="background-color: #5B158C;">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-1">
+        <div>
+            <%= image_tag 'image.png', alt: 'logo' , size: '170x50' %>
+        </div>
+        
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default" style="background-color: #5B158C;">
+            <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                
+                <%= link_to user_backoffice_tasks_path do %>
+                    <li class="flex text-white">
+                        <div  class="block py-2 px-3rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 hover:text-gray-500 md:p-0">
+                            Minhas tarefas
+                        </div>
+                    </li>
+                <% end %>
+
+                <%= link_to user_backoffice_list_shareds_path do %>
+                    <li class="flex text-white">
+                        <div  class="block py-2 px-3rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 hover:text-gray-500 md:p-0">
+                            Tarefas compartilhadas comigo
+                        </div>
+                    </li>
+                <% end %>
+
+                <%= link_to user_backoffice_home_index_path do %>
+                    <li class="flex text-white">
+                        <div class="block py-2 px-3rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 hover:text-gray-500 md:p-0">
+                            Histórico
+                        </div>
+                    </li>
+                <% end %>
+
+                <li class="flex text-white">
+                    <%= form_with(url: "/users/sign_out", method: :delete) do %>
+                        <%= button_to 'Sair', "/users/sign_out", method: :delete , class: "block py-2 px-3rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 hover:text-gray-500 md:p-0"%>
+                    <% end %>
+                </li>
+
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+  

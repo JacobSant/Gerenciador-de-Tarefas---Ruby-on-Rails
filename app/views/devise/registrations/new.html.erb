@@ -1,0 +1,42 @@
+<div class="w-full flex flex-col mt-10 text-white">
+    
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <div class="max-w-sm  grid grid-cols-1 px-10 pt-10 mx-auto border border-gray-400 rounded-xl" style="background-color: #5B158C;">
+          <div>
+              <%= image_tag 'image.png', alt: 'logo' %>
+          </div>
+          
+
+          <h3 class="text-md font-medium text-white dark:text-white mt-4 mx-auto">Faça seu cadastro</h3>
+
+          <div class="my-2 text-white">
+              <%= f.label :email , class: "text-sm font-medium text-white dark:text-white"%><br />
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+          </div>
+
+
+
+          <div class="mt-2">
+              <%= f.label :password ,"Senha", class: "text-sm font-medium text-white dark:text-white"%><br />
+              <%= f.password_field :password, autocomplete: "current-password" , class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"%>
+          </div>
+
+          <div class="mt-2">
+            <%= f.label :password_confirmation ,"Confirmar senha" , class: "text-sm font-medium text-white dark:text-white"%><br />
+            <%= f.password_field :password_confirmation, autocomplete: "current-password" , class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"%>
+        </div>
+      
+          <div class="my-2 ">
+              <%= f.submit "Cadastrar" , class: "mt-2 mb-10 text-purple-600 bg-gray-300 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full mt-2 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"%>
+          </div>
+      </div>
+  <% end %>
+</div>
+
+
+
+
+  
+
+  
+

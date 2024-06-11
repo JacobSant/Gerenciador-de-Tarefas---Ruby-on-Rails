@@ -1,0 +1,259 @@
+<div class="w-full">
+    
+  <% content_for :title, "Tasks" %>
+
+  <div class="flex justify-between items-center mt-2">
+    <h1 class="font-bold text-2xl mr-auto ml-0 font-sans text-gray-700">Minhas Tarefas</h1>
+    <%= link_to new_user_backoffice_task_path do %>
+      <button class = "mr-0 ml-auto rounded-md px-5 py-1 bg-blue-600 text-white block font-medium " style="background-color: #5B158C;">
+        Nova tarefa
+      </button>
+    <% end %>
+  </div>
+    <% if notice.present? %>                  
+        <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <% end %>
+
+    <div class="w-full grid grid-cols-2 gap-4 p-4">
+        <!-- Minhas tarefas-->
+        <div id="user_backoffice_tasks">
+            <p class="text-xl  text-gray-700 font-semibold ml-4">Minhas tarefas</p>
+            <% if @user_backoffice_tasks.empty?%>
+                <p>Quando você tiver alguma tarefa, ela aparecerá aqui</p>
+            <% else %>
+                <div class="border text-gray-600 rounded-lg">
+                    
+
+                    <% @user_backoffice_tasks.each do |user_backoffice_task| %>
+                        <div class="flex flex-col pb-2 border-b border-gray-200 rounded-md mb-2">
+                            
+                            <div class="w-full justify-center text-white rounded-lg p-2 flex px-4 bg-purple-600">
+                                <h4><%= user_backoffice_task.title %></h4>
+                                <%= button_tag "v", class: "button_description text-white mr-0 ml-auto" do %>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down">
+                                    <path d="m6 9 6 6 6-6"/>
+                                    </svg>
+                                <% end %>
+                            </div>
+
+                            <div  class="description_section mt-4 p-4  border-b border-gray-400 hidden text-gray-500 text-sm">
+                                <p class="font-semibold">Descrição da tarefa:</p>
+                                <p class="py-2"><%= user_backoffice_task.description %></p>
+
+                            </div>
+                            <p class="p-2 items-center text-gray-300">Tarefa não concluída, criada em: <%= user_backoffice_task.created_at.strftime("%d/%m/%Y")%></p>
+                            <div class="p-2 grid grid-cols-3 w-full">
+                    
+                                <p class="text-white rounded-lg p-1 text-center  text-sm w-full items-center <%= case user_backoffice_task.priority
+                                when 'Alta'
+                                    'bg-red-500'
+                                when 'Baixa'
+                                    'bg-blue-600' 
+                                else
+                                    'bg-yellow-600'
+                                end %>">
+                                    Prioridade <%= user_backoffice_task.priority %>
+                                </p>
+                                <p></p>
+                                <%= form_with(url: complete_user_backoffice_task_path(user_backoffice_task), method: :patch, local: true) do |form| %>
+                                    <%= button_tag type: 'submit', class: "text-white rounded-lg p-1 text-center text-sm bg-green-400 flex px-2  w-full" do %>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2">
+                                        <path d="M20 6 9 17l-5-5"/>
+                                        </svg>
+                                        Concluir
+                                    <% end %>
+                                <% end %>
+
+                                
+
+                                
+                                                        
+                            </div>
+                                    
+                            
+
+                            <div class="grid grid-cols-3 text-xs p-4 text-center gap-4">
+                                <p>
+                                    <%= link_to "Ver tarefa", user_backoffice_task, class: "ml-2 rounded-lg py-1 px-5  inline-block font-medium w-full" %>
+                                </p>
+                                <p>
+                                    <%= link_to "Editar", edit_user_backoffice_task_path(user_backoffice_task), class: "ml-2 rounded-lg py-1 px-5  inline-block font-medium w-full " %>
+                                </p>
+                                <button data-modal-target="shared_<%=  user_backoffice_task.id%>" data-modal-toggle="shared_<%=  user_backoffice_task.id%>" class="ml-2 rounded-lg py-1 px-5  inline-block font-medium w-full" type="button">
+                                    Compartilhar
+                                </button>
+                                
+                            </div>
+                        </div>
+
+
+                        <!-- Main modal -->
+                        <div id="shared_<%=  user_backoffice_task.id%>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                            <div class="relative p-4 w-full max-w-md max-h-full">
+                                <!-- Modal content -->
+                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                    <!-- Modal header -->
+                                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                        <h3 class="text-base font-semibold text-gray-900 dark:text-white">
+                                            Compartilhar tarefa: <%= user_backoffice_task.title %>
+                                        </h3>
+                                        <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="shared_<%=  user_backoffice_task.id%>">
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <div class="p-4 md:p-5">
+                                        <%= form_with(url: shared_user_backoffice_task_path(user_backoffice_task), method: :patch, local: true) do |form| %>
+                                            <div>
+                                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Adicionar email de participante</label>
+                                                <%= form.email_field :email, autofocus: true, autocomplete: "email", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>    
+                                            </div>
+                                            <%= button_tag type: 'submit', class: "w-full mt-2 text-white bg-purple-600 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" do %>
+                                                Compartilhar
+                                            <% end %>
+                                        <% end %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>
+
+        <!-- Minhas tarefas compertilhadas-->
+        <div id="shared_with_user">
+            <p class="text-xl  text-gray-700 font-semibold ml-4">Minhas tarefas Compartilhadas</p>
+            <% if @shared_with_user.empty?%>
+                <p>Quando você tiver alguma tarefa compartilhada, ela aparecerá aqui</p>
+            <% end %>
+            <div class="border text-gray-600 rounded-lg">
+                
+        
+                <% @shared_with_user.each do |user_backoffice_task| %>
+                    <div class="flex flex-col pb-2 border-b border-gray-200 rounded-md mb-2">
+                        
+                        <div class="w-full justify-center text-white rounded-lg p-2 flex px-4 bg-purple-600">
+                            <h4><%= user_backoffice_task[0].title %></h4>
+                            <%= button_tag "v", class: "button_description text-white mr-0 ml-auto" do %>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down">
+                                <path d="m6 9 6 6 6-6"/>
+                                </svg>
+                            <% end %>
+                        </div>
+
+                        <div  class="description_section mt-4 p-4  border-b border-gray-400 hidden text-gray-500 text-sm">
+                            <p class="font-semibold">Descrição da tarefa:</p>
+                            <p class="border-b border-gray-400 mb-2 py-2"><%= user_backoffice_task[0].description %></p>
+                            
+                            <p class="font-semibold mt-2">Criador da tarefa:</p>
+                            <p class="border-b border-gray-400 mb-2 py-2"><%= user_backoffice_task[2].email %></p>
+
+                            <p class="font-semibold mt-2">Pessoas com acesso a essa tarefa:</p>
+                            <% user_backoffice_task[1].each do |user_shared| %>
+                                <p class=" py-2"><%= user_shared.email %></p>
+                            <% end %>
+                        </div>
+
+                        <p class="p-2 items-center text-gray-400">Tarefa não concluída, criada em: <%= user_backoffice_task[0].created_at.strftime("%d/%m/%Y")%> </p>
+                        <div class="p-2 grid grid-cols-3 w-full">
+                
+                            <p class="text-white rounded-lg p-1 text-center  text-sm w-full items-center <%= case user_backoffice_task[0].priority
+                            when 'Alta'
+                                'bg-red-500'
+                            when 'Baixa'
+                                'bg-blue-600' 
+                            else
+                                'bg-yellow-600'
+                            end %>">
+                                Prioridade <%= user_backoffice_task[0].priority %>
+                            </p>
+                            <p></p>
+                            <%= form_with(url: complete_user_backoffice_task_path(user_backoffice_task[0]), method: :patch, local: true) do |form| %>
+                                <%= button_tag type: 'submit', class: "text-white rounded-lg p-1 text-center text-sm bg-green-400 flex px-2  w-full" do %>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2">
+                                    <path d="M20 6 9 17l-5-5"/>
+                                    </svg>
+                                    Concluir
+                                <% end %>
+                            <% end %>                     
+                        </div>
+                                
+                        
+        
+                        <div class="grid grid-cols-3 text-xs p-4 text-center gap-4">
+                            <p>
+                                <%= link_to "Ver tarefa", user_backoffice_task[0], class: "ml-2 rounded-lg py-1 px-5  inline-block font-medium w-full" %>
+                            </p>
+                            <p>
+                                <%= link_to "Editar", edit_user_backoffice_task_path(user_backoffice_task[0]), class: "ml-2 rounded-lg py-1 px-5  inline-block font-medium w-full " %>
+                            </p>
+                            <button data-modal-target="shared_<%=  user_backoffice_task[0].id%>" data-modal-toggle="shared_<%=  user_backoffice_task[0].id%>" class="ml-2 rounded-lg py-1 px-5  inline-block font-medium w-full" type="button">
+                                Compartilhar
+                            </button>
+                            
+                        </div>
+                    </div>
+        
+        
+                    <!-- Main modal -->
+                    <div id="shared_<%=  user_backoffice_task[0].id%>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                        <div class="relative p-4 w-full max-w-md max-h-full">
+                            <!-- Modal content -->
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <!-- Modal header -->
+                                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                    <h3 class="text-base font-semibold text-gray-900 dark:text-white">
+                                        Compartilhar tarefa: <%= user_backoffice_task[0].title %>
+                                    </h3>
+                                    <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="shared_<%=  user_backoffice_task[0].id%>">
+                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="p-4 md:p-5">
+                                    <%= form_with(url: shared_user_backoffice_task_path(user_backoffice_task[0]), method: :patch, local: true) do |form| %>
+                                        <div>
+                                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Adicionar email de participante</label>
+                                            <%= form.email_field :email, autofocus: true, autocomplete: "email", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>    
+                                        </div>
+                                        <%= button_tag type: 'submit', class: "w-full mt-2 text-white bg-purple-600 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" do %>
+                                            Compartilhar
+                                        <% end %>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var toggleButtons = document.querySelectorAll(".button_description");
+    var toggleDivs = document.querySelectorAll(".description_section");
+
+    toggleButtons.forEach(function(button, index) {
+      button.addEventListener("click", function() {
+        toggleDivs[index].classList.toggle("hidden");
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+
+  
+  
